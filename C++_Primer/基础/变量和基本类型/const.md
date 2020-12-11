@@ -1,3 +1,14 @@
+<!--
+author: lumos
+date: 2020-12-11
+title:  
+tags: 
+category: 
+status: draft
+summary: 
+-->
+
+
 # const
 - 被const修饰的变量，一但创建（编译后运行时）后**无法改变**
 - const变量必须初始化

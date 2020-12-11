@@ -1,3 +1,13 @@
+<!--
+author: lumos
+date: 2020-12-11
+title:  
+tags: 
+category: 
+status: draft
+summary: 
+-->
+
 # auto
 类型说明符，通过初始值来推算并声明和初始化对象
 ```c++
