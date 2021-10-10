@@ -1,14 +1,3 @@
-<!--
-author: lumos
-date: 2020-12-11
-title:  
-tags: 
-category: 
-status: draft
-summary: 
--->
-
-
 # decltype
 类型指示符，通过expr表达式声明avl的类型
 ```C++
@@ -43,3 +32,5 @@ int *p = nullptr;
 decltype(r + 0) x = 0;	//加法的结果是int，所以x的类型是int
 decltype(*p) y = x;		//y的类型是int&，绑定到x对象
 ```
+
+> decltype指示数组或函数, 不会返回指针

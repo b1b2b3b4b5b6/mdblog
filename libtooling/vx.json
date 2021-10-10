@@ -1,48 +1,40 @@
 {
-    "created_time": "2020-12-11T02:24:57Z",
+    "created_time": "2021-10-03T15:25:37Z",
     "files": [
         {
             "attachment_folder": "",
-            "attachments": [
-            ],
             "created_time": "2020-12-11T02:24:57Z",
+            "id": "0",
             "modified_time": "2020-12-11T02:24:57Z",
-            "name": "标准库类型string.md",
+            "name": "Clang入门【1】：介绍.md",
             "tags": [
             ]
         },
         {
             "attachment_folder": "",
-            "attachments": [
-            ],
             "created_time": "2020-12-11T02:24:57Z",
+            "id": "0",
             "modified_time": "2020-12-11T02:24:57Z",
-            "name": "标准库类型vector.md",
+            "name": "Clang入门【2】：使用LibTooling.md",
             "tags": [
             ]
         },
         {
             "attachment_folder": "",
-            "attachments": [
-            ],
             "created_time": "2020-12-11T02:24:57Z",
+            "id": "0",
             "modified_time": "2020-12-11T02:24:57Z",
-            "name": "概念.md",
-            "tags": [
-            ]
-        },
-        {
-            "attachment_folder": "",
-            "attachments": [
-            ],
-            "created_time": "2020-12-11T02:24:57Z",
-            "modified_time": "2020-12-11T02:24:57Z",
-            "name": "迭代器.md",
+            "name": "Clang入门【3】：使用Plugin.md",
             "tags": [
             ]
         }
     ],
-    "sub_directories": [
+    "folders": [
+        {
+            "name": "vx_recycle_bin"
+        }
     ],
+    "id": "1",
+    "modified_time": "2021-10-03T15:25:37Z",
     "version": "1"
 }
