@@ -1,0 +1,6 @@
+vnote_backup_file_826537664 C:/Users/zhanghao.chen/OneDrive/文档/vnote/work/CPressTool/CThreadBase.md
+# CThreadBase
+##### 功能
+- 储存线程状态信息
+- 定义线程操作方法
+- 获取线程信息方法
