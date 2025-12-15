@@ -1,14 +1,14 @@
 {
     "attachment_folder": "vx_attachments",
     "config_mgr": "vx.vnotex",
-    "created_time": "2024-02-11T08:11:45Z",
+    "created_time": "2025-12-15T03:45:20Z",
     "description": "",
     "extra_configs": {
     },
     "history": [
     ],
     "image_folder": "vx_images",
-    "name": "Ros2",
+    "name": "study",
     "tag_graph": "",
     "version": 3,
     "version_controller": "dummy.vnotex"
