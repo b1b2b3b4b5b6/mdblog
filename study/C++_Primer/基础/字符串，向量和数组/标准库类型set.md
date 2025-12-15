@@ -51,7 +51,7 @@ using std::multiset;
 | s.size()         | 返回s中的元素个数                           |
 | s.find(t)        | 查找值为t的元素，返回迭代器，未找到返回end() |
 | s.count(t)       | 返回值为t的元素个数（set为0或1）             |
-| s.lower_bound(t) | 返回最后一个<=t的元素的迭代器                |
+| s.lower_bound(t) | 返回第一个>=t的元素的迭代器                |
 | s.upper_bound(t) | 返回第一个>t的元素的迭代器                   |
 | s.equal_range(t) | 返回pair，包含lower_bound和upper_bound      |
 | s1 == s2         | 元素完全相同时返回真                        |
