@@ -8,8 +8,7 @@
             "modified_time": "2025-12-15T03:45:21Z",
             "name": "map.md",
             "signature": "9349428182001878097",
-            "tags": [
-            ]
+            "tags": []
         },
         {
             "attachment_folder": "",
@@ -18,8 +17,7 @@
             "modified_time": "2025-12-15T03:45:21Z",
             "name": "priority_queue.md",
             "signature": "552215414575170641",
-            "tags": [
-            ]
+            "tags": []
         },
         {
             "attachment_folder": "",
@@ -28,8 +26,7 @@
             "modified_time": "2025-12-15T03:47:15Z",
             "name": "set.md",
             "signature": "9292787394547778641",
-            "tags": [
-            ]
+            "tags": []
         },
         {
             "attachment_folder": "",
@@ -38,8 +35,7 @@
             "modified_time": "2025-12-15T03:45:21Z",
             "name": "string.md",
             "signature": "15495199982243251281",
-            "tags": [
-            ]
+            "tags": []
         },
         {
             "attachment_folder": "",
@@ -48,8 +44,7 @@
             "modified_time": "2025-12-15T03:45:21Z",
             "name": "vector.md",
             "signature": "11904846556760605777",
-            "tags": [
-            ]
+            "tags": []
         },
         {
             "attachment_folder": "",
@@ -58,8 +53,7 @@
             "modified_time": "2025-12-15T03:45:21Z",
             "name": "迭代器.md",
             "signature": "11001337397920105553",
-            "tags": [
-            ]
+            "tags": []
         },
         {
             "attachment_folder": "",
@@ -68,8 +62,7 @@
             "modified_time": "2025-12-16T09:03:26Z",
             "name": "deque.md",
             "signature": "1575554805219270750",
-            "tags": [
-            ]
+            "tags": []
         },
         {
             "attachment_folder": "",
@@ -78,8 +71,7 @@
             "modified_time": "2026-01-07T10:26:21Z",
             "name": "queue.md",
             "signature": "7433400008052716749",
-            "tags": [
-            ]
+            "tags": []
         },
         {
             "attachment_folder": "",
@@ -88,8 +80,7 @@
             "modified_time": "2026-01-12T02:46:54Z",
             "name": "swap.md",
             "signature": "7927205648048105629",
-            "tags": [
-            ]
+            "tags": []
         },
         {
             "attachment_folder": "",
@@ -98,12 +89,10 @@
             "modified_time": "2026-01-20T10:35:31Z",
             "name": "stringstream.md",
             "signature": "2155110996290525811",
-            "tags": [
-            ]
+            "tags": []
         }
     ],
-    "folders": [
-    ],
+    "folders": [],
     "id": "31",
     "modified_time": "2025-12-15T03:45:21Z",
     "signature": "11583154081815823441",
