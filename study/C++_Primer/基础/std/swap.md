@@ -50,3 +50,15 @@ namespace std{
     }
 };
 ```
+
+
+## swap
+* swap不是必要的
+* swap需要定义成友元函数
+* 友元swap优先级高于std::swap
+
+```C++
+class Foo{
+    friend void swap(Foo &, Foo &);
+}
+```
