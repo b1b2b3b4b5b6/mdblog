@@ -54,6 +54,10 @@ using std::array;
 
 >注：只有在T可比较的情况下，array<T, N>才可比较
 
+##### 迭代器本质
+- `array<T, N>::iterator`本质为指针（连续内存上的T*）
+- `const_iterator`为`const T*`
+
 ##### range-for迭代
 拷贝方式，不可赋值
 ```C++
