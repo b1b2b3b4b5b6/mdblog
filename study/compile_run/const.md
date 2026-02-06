@@ -54,3 +54,53 @@ class OBJ{
 ```
 * const修饰的成员函数可以接受指向`const OBJ`的指针（一般成员函数不能）
 * const修改的成员函数只可修改mutable和static成员变量
+
+## 其他作用
+### 延长临时对象生命周期
+如下
+```C++
+#include <iostream>
+#include <string>
+
+class MyClass {
+public:
+    MyClass(int val) : value(val) {
+        std::cout << "构造: " << value << std::endl;
+    }
+    ~MyClass() {
+        std::cout << "析构: " << value << std::endl;
+    }
+    int value;
+};
+
+MyClass createTemp() {
+    return MyClass(42);  // 返回临时对象
+}
+
+int main() {
+    std::cout << "=== 情况1: 没有引用接收 ===" << std::endl;
+    {
+        createTemp();  // 临时对象立即销毁
+        std::cout << "表达式结束后" << std::endl;
+    }
+    
+    std::cout << "\n=== 情况2: const引用接收 ===" << std::endl;
+    {
+        const MyClass& ref = createTemp();  // 临时对象生命周期延长
+        std::cout << "可以使用: " << ref.value << std::endl;
+        std::cout << "作用域结束前..." << std::endl;
+    }  // 这里才析构
+    
+    std::cout << "\n=== 情况3: 非const引用（编译错误）===" << std::endl;
+    // MyClass& ref2 = createTemp();  // 错误！非const引用不能绑定临时对象
+    
+    std::cout << "\n=== 情况4: 实际应用 ===" << std::endl;
+    {
+        // 常见场景：函数参数
+        const std::string& s = std::string("Hello") + " World";
+        std::cout << s << std::endl;  // 临时string对象仍然存活
+    }
+    
+    return 0;
+}
+```
