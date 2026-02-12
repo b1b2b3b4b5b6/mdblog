@@ -8,19 +8,43 @@
 
 当且仅当`预期值E`==`内存值V`相，将`内存值V`=`N`，否则什么都不做。
 
-#### 特性
+### 特性
 * 通过硬件指令实现，具有`原子性`
 
-#### 函数
-```C++
+### 函数
+```cpp
 class atomic {
     bool compare_exchange_strong(T& expect /*用来比较的值*/, T desired/*用来设置的值*/)
     bool compare_exchange_weak(T& expect, T desired)
 }
 
 ```
+所以weak和strong的区别在于，weak仍然在`*ptr == expected`的时候，执行依然会有小概率失败也就是说， 即使`*ptr == expected`，此时也不会发生值的设置，返回false。（不会是设置成功了，但是返回的是false）
+
+### 伪代码
+```C++
+if (target == expected) {  // 比较
+    target = desired;     // 成功：交换
+    return true;
+} else {
+    expected = target;     // 失败：更新old_vp为最新值
+    return false;
+}
+```
+失败时，都会将head值写入expected
 
 
-> 所以weak和strong的区别在于，weak仍然在`*ptr == expected`的时候，执行依然会有小概率失败
->也就是说， 即使`*ptr == expected`，此时也不会发生值的设置，返回false。（不会是设置成功了，但是返回的是false）
+### 🎓 CAS 的两个内存序详解
+
+```cpp
+compare_exchange_weak(expected, desired,
+    std::memory_order_release,    // ← 成功时的内存序
+    std::memory_order_acquire);   // ← 失败时的内存序
+```
+
+|   结果    |         操作         |         内存序用途         |                         含义                          |
+| -------- | ------------------- | ------------------------- | ----------------------------------------------------- |
+| **成功** | `next_ptr = new_vp` | 需要**发布**新值给其他线程 | 我要发布数据，确保**之前的写入**对其他线程可见          |
+| **失败** | `old_vp = next_ptr` | 需要**获取**其他线程的新值 | CAS失败了，说明有其他线程修改了值，我要**获取**最新数据 |
+
 
