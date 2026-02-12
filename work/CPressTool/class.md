@@ -1,5 +1,5 @@
 # class
-```C++
+```cpp
 class CPressTool : public CThreadBase
 {
 public:

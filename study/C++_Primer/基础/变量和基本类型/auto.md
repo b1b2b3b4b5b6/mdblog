@@ -10,11 +10,11 @@ summary:
 
 # auto
 类型说明符，通过初始值来推算并声明和初始化对象
-```c++
+```cpp
 auto n = 3.14 + 1;	//n的类型是double，初始值为4.14
 ```
 auto一般会忽略顶层const，保留底层const
-```C++
+```cpp
 const int ci = 0;
 const int &cr = ci;
 auto a = ci;  //int

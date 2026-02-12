@@ -10,7 +10,7 @@ summary:
 
 
 # 标准库类型list
-```C++
+```cpp
 #include <list>
 using std::list;
 ```
@@ -75,18 +75,18 @@ using std::list;
 
 ##### range-for迭代
 拷贝方式，不可赋值
-```C++
+```cpp
 for(auto i : l)
 	cout << i << endl;
 ```
 引用方式，可赋值
-```C++
+```cpp
 for(auto &i : l)
 	cout << i << endl;
 ```
 
 ##### 使用示例
-```C++
+```cpp
 list<int> l = {3, 1, 2, 2, 4};
 
 l.push_front(0);            // {0,3,1,2,2,4}

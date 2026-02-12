@@ -10,7 +10,7 @@ summary:
 
 
 # 标准库类型set/multiset
-```C++
+```cpp
 #include <set>
 using std::set;
 using std::multiset;
@@ -64,18 +64,18 @@ using std::multiset;
 
 ##### range-for迭代
 拷贝方式（推荐，set元素不可修改）
-```C++
+```cpp
 for(auto i : s)			
 	cout << i << endl;
 ```
 引用方式（只读）
-```C++
+```cpp
 for(const auto &i : s)			
 	cout << i << endl;
 ```
 
 ##### 自定义比较器
-```C++
+```cpp
 // 方法1: 函数对象
 struct cmp {
     bool operator()(int a, int b) const {
@@ -90,7 +90,7 @@ set<int, decltype(cmp)> s(cmp);
 ```
 
 ##### multiset特性
-```C++
+```cpp
 multiset<int> ms{1, 2, 2, 3, 3, 3};
 ms.count(3);           // 返回3
 ms.erase(3);           // 删除所有值为3的元素
@@ -98,7 +98,7 @@ ms.erase(ms.find(3));  // 只删除一个值为3的元素
 ```
 
 ##### 常用操作示例
-```C++
+```cpp
 set<int> s = {3, 1, 4, 1, 5};  // 自动去重排序: {1, 3, 4, 5}
 
 // 插入

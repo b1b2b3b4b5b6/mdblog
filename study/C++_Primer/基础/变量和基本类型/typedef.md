@@ -11,7 +11,7 @@ summary:
 
 # typedef
 类型别名
-```C++
+```cpp
 typedef int (*fop)(int);	//定义函数指针类型别名
 typedef int *foo(int);		//定义函数类型别名
 

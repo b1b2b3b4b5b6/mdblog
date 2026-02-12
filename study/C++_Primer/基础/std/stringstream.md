@@ -10,7 +10,7 @@ summary:
 
 
 # 标准库类型stringstream
-```C++
+```cpp
 #include <sstream>
 using std::stringstream;
 using std::istringstream;
@@ -41,7 +41,7 @@ using std::ostringstream;
 
 ##### 使用场景
 **字符串分割**
-```C++
+```cpp
 string line = "hello world test";
 istringstream iss(line);
 string word;
@@ -51,7 +51,7 @@ while (iss >> word) {
 ```
 
 **类型转换**
-```C++
+```cpp
 // 数字转字符串
 int num = 123;
 ostringstream oss;
@@ -66,14 +66,14 @@ iss >> n;  // n = 456
 ```
 
 **格式化输出**
-```C++
+```cpp
 stringstream ss;
 ss << "Name: " << name << ", Age: " << age;
 string result = ss.str();
 ```
 
 **多值解析**
-```C++
+```cpp
 string data = "10 20.5 hello";
 istringstream iss(data);
 int i;
@@ -98,7 +98,7 @@ iss >> i >> d >> s;  // i=10, d=20.5, s="hello"
 * 类型转换失败时需要检查流状态
 
 ##### 清空stringstream
-```C++
+```cpp
 stringstream ss;
 ss << "old data";
 

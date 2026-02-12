@@ -10,7 +10,7 @@ summary:
 
 
 # 标准库类型map
-```C++
+```cpp
 #include <map>
 using std::map;
 ```
@@ -80,17 +80,17 @@ using std::map;
 
 ##### range-for迭代
 拷贝方式，不可赋值
-```C++
+```cpp
 for(auto i : v)			
 	cout << i <<endl;
 ```
 引用方式，可赋值
-```C++
+```cpp
 for(auto &i : v)			//循环变量定义为引用
 	cout << i <<endl;
 ```
 ##### map截取
-```C++
+```cpp
 map<int>::const_iterator fist1 = Arrs.begin(); // 第三个迭代器
 map<int>::const_iterator last1 = Arrs.end() - 1; // 倒数第二个迭代器
 vector<int> SubArrs(first1, last1); // 创建整型的容器

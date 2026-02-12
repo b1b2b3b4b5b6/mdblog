@@ -10,7 +10,7 @@ summary:
 
 
 # string 
-```C++
+```cpp
 #include <string.h>
 using std::string;
 ```
@@ -46,12 +46,12 @@ using std::string;
 
 ##### range-for迭代
 拷贝方式，不可赋值
-```C++
+```cpp
 for(auto c : str)			
 	cout << c <<endl;
 ```
 引用方式，可赋值
-```C++
+```cpp
 for(auto &c : str)			//循环变量定义为引用
 	cout << c <<endl;
 ```

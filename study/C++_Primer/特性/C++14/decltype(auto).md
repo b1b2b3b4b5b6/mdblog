@@ -1,6 +1,6 @@
 # decltype(auto)
 作用：让编译器用decltype规则推导，常用于完美转发
-```C++
+```cpp
 // 场景1：转发函数返回值
 template<typename F, typename... Args>
 decltype(auto) wrapper(F&& f, Args&&... args) {

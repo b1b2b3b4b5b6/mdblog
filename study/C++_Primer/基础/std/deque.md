@@ -10,7 +10,7 @@ summary:
 
 
 # 标准库类型deque
-```C++
+```cpp
 #include <deque>
 using std::deque;
 ```
@@ -68,18 +68,18 @@ using std::deque;
 
 ##### range-for迭代
 拷贝方式，不可赋值
-```C++
+```cpp
 for(auto i : d)			
 	cout << i << endl;
 ```
 引用方式，可赋值
-```C++
+```cpp
 for(auto &i : d)			//循环变量定义为引用
 	cout << i << endl;
 ```
 
 ##### 使用示例
-```C++
+```cpp
 deque<int> d;
 
 // 两端插入

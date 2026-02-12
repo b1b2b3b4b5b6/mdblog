@@ -14,7 +14,7 @@ summary: LibTooling静态分析示例
 我们将从LIbtooling的例子开始介绍，因为个人觉得它是Clang最好用的接口，当然，这部分的代码略经修改也能作为插件方式使用。
 
 以分析一个简单的C文件(test.c)为例：
-```C++
+```cpp
 void do_math(int *x) {
     *x += 5;
 }
@@ -36,7 +36,7 @@ int main(void) {
 
 #### 从Main函数开始
 Example.cpp的内容如下：
-```C++
+```cpp
 int main(int argc, const char **argv) {
     // parse the command-line args passed to your code
     CommonOptionsParser op(argc, argv);
@@ -54,14 +54,14 @@ int main(int argc, const char **argv) {
 ```
 上面的代码基本是自注释的，除了`rewriter`（将在下文解释），代码在首先设置了Clang Tool（**L5**），传递命令行参数（op.getCompilations()）和待解析文件列表（op.getSourcePathList()），然后调用run方法（**L8**）。使用LibTooling的好处在于你可以在解析前（**L6**）后（**L9**）做一些事情，比如打印输出，修改代码（**L12**），统计函数总数（**L10**）。在Clang插件的情形下是无法做到的。
 同时我们需要定义一些全局变量。
-```C++
+```cpp
 Rewriter rewriter;
 int numFunctions = 0;
 ```
 
 #### 创建一个FrontendAction
 现在，我们可以创建自定义的[FrontAction](http://clang.llvm.org/doxygen/classclang_1_1FrontendAction.html)，具体就是一个能够在Clang前端执行操作的类，我们选择[ASTFrontAction](http://clang.llvm.org/doxygen/classclang_1_1ASTFrontendAction.html)去分析test.c的AST。
-```C++
+```cpp
 class ExampleFrontendAction : public ASTFrontendAction {
 public:
     virtual ASTConsumer *CreateASTConsumer(CompilerInstance &CI, StringRef file) {
@@ -73,7 +73,7 @@ public:
 
 #### 创建一个ASTConsumer
 [ASTConsumer](http://clang.llvm.org/doxygen/classclang_1_1ASTConsumer.html)能够消费（读取）Clang parser产生的AST。你可以重写这个类里面许多方法，当一个特定种类的AST节点被解析时，重写的方法就会被调用。首先，然我们重写[HandleTopLevelDecl()](http://clang.llvm.org/doxygen/classclang_1_1ASTConsumer.html#a856744773798bd97057ccbc2768b21ad)，这个方法会在顶层定义（全局变量，函数定义）被解析时被调用。
-```C++
+```cpp
 class ExampleASTConsumer : public ASTConsumer {
 private:
     ExampleVisitor *visitor; // doesn't have to be private
@@ -101,7 +101,7 @@ public:
 当然，`HandleTopLevelDecl()`会在声明被解析时立即调用，而不是在所有解析完成之后，重写这个函数后，是无法得知已完成的解析内容。
 幸运的是，ASTConsumer还有一个更好的方法去重写：[ HandleTranslationUnit()](http://clang.llvm.org/doxygen/classclang_1_1ASTConsumer.html#a2bea2db1d0e8af16c60ee7847f0d46ff)，这个方法会在所有源文件解析之后被调用，并且传入一个[ASTContext](http://clang.llvm.org/doxygen/classclang_1_1ASTContext.html)引用，其包含了源文件的AST。
 将`HandleTopLevelDecl()`替换成`HandleTranslationUnit()`，我们可以得到下面的代码
-```C++
+```cpp
 // this replaces "HandleTopLevelDecl"
 // override this to call our ExampleVisitor on the entire source file
 virtual void HandleTranslationUnit(ASTContext &Context) {
@@ -118,7 +118,7 @@ virtual void HandleTranslationUnit(ASTContext &Context) {
 形如`Visit*`这样的方法，我们重写它的时候必须返回`true`来使AST继续进行下去，因为返回`false`会使遍历结束。我们不能直接调用形如`Visit*`这样的方法，而是通过调用`TraverseDecl `来实现遍历（就像我们在ExampleASTConsumer里做的一样）。
 
 在我们需要修改函数定义和表达式，所以我们只需要去重写`VisitFunctionDecl`和`VisitStmt`，下面是具体代码。
-```C++
+```cpp
 class ExampleVisitor : public RecursiveASTVisitor {
 private:
     ASTContext *astContext; // used for getting additional AST info
@@ -164,7 +164,7 @@ public:
 
 #### Visit* Functions的细节
 在test.c的代码中，我们只需要修改返回语句（L8）和函数调用于语句（L7），我们是通过重写`VisitStmt`是实现的，这种办法比较底层，可以分别重写`VisitReturnStmt`和`VisitCallExpr`来作为替代，更为简单。
-```C++
+```cpp
 // this replaces the VisitStmt function above
 virtual bool VisitReturnStmt(ReturnStmt *ret) {
     rewriter.ReplaceText(ret->getLocStart(), 6, "val");
@@ -209,7 +209,7 @@ $LLVM_DIR/Debug+Asserts/bin/example \
 
 #### 结论
 在成功进行上述步骤后，你将得到以下输出
-```C++
+```cpp
 ** Rewrote function def: do_math
 ** Rewrote function call
 ** Rewrote ReturnStmt

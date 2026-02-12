@@ -10,7 +10,7 @@ summary:
 
 
 # 标准库类型array
-```C++
+```cpp
 #include <array>
 using std::array;
 ```
@@ -60,18 +60,18 @@ using std::array;
 
 ##### range-for迭代
 拷贝方式，不可赋值
-```C++
+```cpp
 for(auto i : a)
 	cout << i << endl;
 ```
 引用方式，可赋值
-```C++
+```cpp
 for(auto &i : a)
 	cout << i << endl;
 ```
 
 ##### 使用示例
-```C++
+```cpp
 array<int, 4> a = {1, 2, 3}; // 第4个元素值初始化为0
 
 a[0] = 10;

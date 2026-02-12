@@ -10,7 +10,7 @@ summary:
 
 
 # 标准库类型priority_queue
-```C++
+```cpp
 #include <queue>
 using std::priority_queue;
 ```
@@ -28,7 +28,7 @@ using std::priority_queue;
 | priority_queue<T> pq5(cmp, cont)      | 使用自定义比较器和底层容器      |
 
 ##### 常用比较器声明
-```C++
+```cpp
 // 最大堆（默认）
 priority_queue<int> maxHeap;
 priority_queue<int, vector<int>, less<int>> maxHeap2;
@@ -55,7 +55,7 @@ priority_queue<int, vector<int>, greater<int>> minHeap;
 
 ##### 自定义比较器
 方法1: 函数对象
-```C++
+```cpp
 struct cmp {
     bool operator()(int a, int b) const {
         return a > b;  // 最小堆
@@ -65,13 +65,13 @@ priority_queue<int, vector<int>, cmp> pq;
 ```
 
 方法2: lambda表达式
-```C++
+```cpp
 auto cmp = [](int a, int b) { return a > b; };
 priority_queue<int, vector<int>, decltype(cmp)> pq(cmp);
 ```
 
 方法3: 自定义类型比较
-```C++
+```cpp
 struct Node {
     int val;
     int priority;
@@ -84,7 +84,7 @@ priority_queue<Node> pq;
 ```
 
 ##### 指针类型元素的比较
-```C++
+```cpp
 struct ListNode {
     int val;
     ListNode *next;
@@ -100,7 +100,7 @@ priority_queue<ListNode*, vector<ListNode*>, cmp> pq;
 ```
 
 ##### 常用操作示例
-```C++
+```cpp
 // 最大堆示例
 priority_queue<int> maxHeap;
 maxHeap.push(3);
@@ -133,7 +133,7 @@ cout << taskQueue.top().name << endl;  // 输出task1
 ```
 
 ##### 从数组构造优先队列
-```C++
+```cpp
 vector<int> nums = {3, 1, 4, 1, 5, 9};
 priority_queue<int> pq(nums.begin(), nums.end());
 

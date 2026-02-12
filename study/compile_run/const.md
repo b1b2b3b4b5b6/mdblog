@@ -25,7 +25,7 @@
     * 若自己定义, 且初始值不确定, 则放在`.bss`
 > 有趣的是, 当`static const 成员变量`在声明时指定初始值时, 对读操作, 会直接使用初始值; 
 > 对`取地址`的相关操作时, 仍会使用符号(自己或其他文件导出的)
-```C++
+```cpp
 class OBJ {
 public:
   static const int k = 2;
@@ -44,7 +44,7 @@ int main() {
 //5(链接决议得到的符号所代表的值)
 ```
 ## 修饰成员函数
-```C++
+```cpp
 class OBJ{
     void ConstFoo() const
     {
@@ -58,7 +58,7 @@ class OBJ{
 ## 其他作用
 ### 延长临时对象生命周期
 如下
-```C++
+```cpp
 #include <iostream>
 #include <string>
 

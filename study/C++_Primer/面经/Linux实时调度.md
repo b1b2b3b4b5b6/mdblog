@@ -13,7 +13,7 @@ summary:
 
 Linux 实时调度提供**确定性响应时间**，用于对时间敏感的任务。
 
-```C++
+```cpp
 #include <sched.h>
 #include <pthread.h>
 ```
@@ -41,7 +41,7 @@ SCHED_DEADLINE > SCHED_FIFO/RR (1-99) > SCHED_OTHER > SCHED_IDLE
 ### 方法1：pthread API（推荐）
 
 ##### 创建线程前设置
-```C++
+```cpp
 pthread_t thread;
 pthread_attr_t attr;
 
@@ -65,7 +65,7 @@ pthread_attr_destroy(&attr);
 ```
 
 ##### 运行时设置
-```C++
+```cpp
 void* realtime_thread(void* arg) {
     struct sched_param param;
     param.sched_priority = 80;
@@ -86,7 +86,7 @@ void* realtime_thread(void* arg) {
 ### 方法2：sched_setscheduler
 
 ##### 设置当前进程
-```C++
+```cpp
 #include <sched.h>
 
 struct sched_param param;
@@ -100,7 +100,7 @@ if (sched_setscheduler(0, SCHED_FIFO, &param) == -1) {
 ```
 
 ##### 设置指定进程
-```C++
+```cpp
 pid_t pid = 12345;
 struct sched_param param;
 param.sched_priority = 50;
@@ -143,7 +143,7 @@ CPUAffinity=0 1  # 可选：绑定 CPU
 ## 完整示例
 
 ##### 基础实时线程
-```C++
+```cpp
 #include <pthread.h>
 #include <sched.h>
 #include <iostream>
@@ -183,7 +183,7 @@ int main() {
 ```
 
 ##### 进程级实时调度 + 内存锁定
-```C++
+```cpp
 #include <sched.h>
 #include <sys/mman.h>
 #include <iostream>
@@ -273,7 +273,7 @@ ps -eLo pid,tid,class,rtprio,cmd | grep my_program
 ```
 
 ### 代码内查询
-```C++
+```cpp
 // 查询当前调度策略
 int policy = sched_getscheduler(0);
 switch (policy) {
@@ -305,7 +305,7 @@ std::cout << "FIFO 优先级范围: " << min_prio << "-" << max_prio << std::end
 | 中断亲和性        | 隔离中断到特定 CPU              | `/proc/irq/*/smp_affinity`       |
 
 ### CPU 亲和性设置
-```C++
+```cpp
 #include <pthread.h>
 
 void set_cpu_affinity(int cpu_id) {
@@ -321,7 +321,7 @@ set_cpu_affinity(2);  // 绑定到 CPU 2
 ```
 
 ### 完整实时配置
-```C++
+```cpp
 bool configure_realtime(int priority, int cpu_id) {
     // 1. 设置实时调度
     struct sched_param param;

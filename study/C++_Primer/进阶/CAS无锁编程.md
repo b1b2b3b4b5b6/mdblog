@@ -22,7 +22,7 @@ class atomic {
 所以weak和strong的区别在于，weak仍然在`*ptr == expected`的时候，执行依然会有小概率失败也就是说， 即使`*ptr == expected`，此时也不会发生值的设置，返回false。（不会是设置成功了，但是返回的是false）
 
 ### 伪代码
-```C++
+```cpp
 if (target == expected) {  // 比较
     target = desired;     // 成功：交换
     return true;

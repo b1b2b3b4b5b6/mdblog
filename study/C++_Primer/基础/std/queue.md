@@ -10,7 +10,7 @@ summary:
 
 
 # 标准库类型queue
-```C++
+```cpp
 #include <queue>
 using std::queue;
 ```
@@ -50,7 +50,7 @@ using std::queue;
 >注：queue不支持迭代器，不能使用range-for循环遍历
 
 ##### 使用示例
-```C++
+```cpp
 queue<int> q;
 
 // 入队
@@ -74,7 +74,7 @@ while (!q.empty()) {
 ```
 
 ##### 指定底层容器
-```C++
+```cpp
 // 使用list作为底层容器
 queue<int, list<int>> q1;
 

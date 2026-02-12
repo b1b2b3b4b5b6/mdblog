@@ -39,7 +39,7 @@ Plugins没有`main()`，所有唯一的调用入口是注册过的[PluginASTActi
 [PluginASTAction](http://clang.llvm.org/doxygen/classclang_1_1PluginASTAction.html)看起来像[ASTFrontendAction](http://clang.llvm.org/doxygen/classclang_1_1ASTFrontendAction.html)，是我们唯一和ASTConsumer产生联系的方法，顾名思义，它只能在Clang Plugin使用。
 
 下面的代码替换了LibTooling例程的`ASTFrontendAction`
-```C++
+```cpp
 class PluginExampleAction : public PluginASTAction {
 protected:
     // this gets called by Clang when it invokes our Plugin
@@ -57,7 +57,7 @@ protected:
 #### 将Plugin注册到Clang
 我们需要将Plugin注册到Clang，这样Clang才能在编译过程中调用到Plugin，就像下面一样：
 
-```C++
+```cpp
 static FrontendPluginRegistry::Add<PluginExampleAction>
        X("-example-plugin", "simple Plugin example");
 

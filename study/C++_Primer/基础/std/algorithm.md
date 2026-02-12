@@ -10,14 +10,14 @@ summary:
 
 
 # 常用算法（accumulate/min_element/max_element/distance）
-```C++
+```cpp
 #include <numeric>    // accumulate
 #include <algorithm>  // min_element/max_element
 #include <iterator>   // distance
 ```
 
 ## std::accumulate
-```C++
+```cpp
 using std::accumulate;
 ```
 - 对区间[first, last)做“累加/折叠”
@@ -38,18 +38,18 @@ using std::accumulate;
 
 ##### 常见用法
 **求和**
-```C++
+```cpp
 vector<int> v{1,2,3};
 int s = accumulate(v.begin(), v.end(), 0); // 6
 ```
 
 **避免整型溢出**
-```C++
+```cpp
 long long s = accumulate(v.begin(), v.end(), 0LL);
 ```
 
 **自定义操作（乘积）**
-```C++
+```cpp
 int prod = accumulate(v.begin(), v.end(), 1, [](int a, int b){ return a * b; });
 ```
 
@@ -59,7 +59,7 @@ int prod = accumulate(v.begin(), v.end(), 1, [](int a, int b){ return a * b; });
 
 
 ## std::min_element
-```C++
+```cpp
 using std::min_element;
 ```
 - 在区间[first, last)中找最小元素
@@ -79,7 +79,7 @@ using std::min_element;
 - $O(n)$，比较次数约`n-1`
 
 ##### 示例
-```C++
+```cpp
 vector<int> v{3,1,2};
 auto it = min_element(v.begin(), v.end());
 if (it != v.end()) cout << *it; // 1
@@ -87,7 +87,7 @@ if (it != v.end()) cout << *it; // 1
 
 
 ## std::max_element
-```C++
+```cpp
 using std::max_element;
 ```
 - 在区间[first, last)中找最大元素
@@ -107,7 +107,7 @@ using std::max_element;
 - $O(n)$，比较次数约`n-1`
 
 ##### 示例
-```C++
+```cpp
 vector<string> v{"a", "abcd", "bb"};
 auto it = max_element(v.begin(), v.end(), [](const string& a, const string& b){
     return a.size() < b.size();
@@ -120,7 +120,7 @@ auto it = max_element(v.begin(), v.end(), [](const string& a, const string& b){
 
 
 ## std::distance
-```C++
+```cpp
 using std::distance;
 ```
 - 计算两个迭代器之间的“步数距离”
@@ -136,7 +136,7 @@ using std::distance;
 - Input/Forward/Bidirectional：$O(n)$
 
 ##### 示例
-```C++
+```cpp
 vector<int> v{1,2,3,4};
 auto it = find(v.begin(), v.end(), 3);
 if (it != v.end()) {
