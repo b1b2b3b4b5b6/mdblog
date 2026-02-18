@@ -1,8 +1,3 @@
-/*
-关键字
-
-*/
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -25,6 +20,7 @@
 
 using namespace std;
 
+/* 共享指针实现  */
 template <typename T>
 class SharedPtr
 {
@@ -134,6 +130,7 @@ private:
     atomic<int> *count;
 };
 
+/* 判断元素是否存在  */
 template <typename Container, typename Value>
 bool contains(const Container &c, const Value &val)
 {
@@ -145,6 +142,7 @@ bool contains(const Container &c, const Value &val)
     return false;
 }
 
+/* 带锁计数器  */
 class Counter
 {
     int count = 0;
@@ -170,6 +168,7 @@ public:
     }
 };
 
+/* 文件IO管理  */
 class File
 {
     std::fstream fs_;
@@ -299,6 +298,7 @@ void print(const T &first, const Args &...args)
     print(args...); // 注意：args...
 }
 
+/* LRU  */
 class LRUCache
 {
 private:
@@ -356,6 +356,7 @@ public:
     }
 };
 
+/* 单例模式  */
 class singleton
 {
 private:
@@ -371,17 +372,7 @@ public:
     }
 };
 
-template <typename T, typename M>
-void foo(T t, M m) {};
-
-// 局部特化
-template <typename M>
-void foo(int t, M m) {};
-
-// 完全特化
-template <>
-void foo(int t, int m) {};
-
+/* 带锁对象池  */
 template <typename T>
 class ObjectPool
 {
@@ -422,6 +413,7 @@ private:
     std::condition_variable cv_;
 };
 
+/* 多线程日志库  */
 class mylog
 {
 public:
@@ -499,6 +491,7 @@ int main()
     auto a = f.get();
 }
 
+/* RAII  */
 class ResourceManager
 {
 public:
@@ -540,6 +533,7 @@ private:
     unique_ptr<void, decltype(&disconnect)> connection_{nullptr, &disconnect};
 };
 
+/* 阻塞队列  */
 template <typename T>
 class BlockingQueue
 {
@@ -587,6 +581,7 @@ private:
     condition_variable write_cv;
 };
 
+/* 无锁对象池简单实现  */
 template <typename T>
 class CASPool
 {
@@ -669,22 +664,23 @@ private:
     mutex lager_m;
 };
 
+/* Any简单实现  */
 struct Any
 {
-    Any(void) : m_tpIndex(std::type_index(typeid(void))) {}
-    Any(const Any &that) : m_ptr(that.Clone()), m_tpIndex(that.m_tpIndex) {}
-    Any(Any &&that) : m_ptr(std::move(that.m_ptr)), m_tpIndex(that.m_tpIndex) {}
+    Any(void) : ty(std::type_index(typeid(void))) {}
+    Any(const Any &that) : m_ptr(that.Clone()), ty(that.ty) {}
+    Any(Any &&that) : m_ptr(std::move(that.m_ptr)), ty(that.ty) {}
 
-    template <typename U, class = typename std::enable_if<!std::is_same<typename std::decay<U>::type, Any>::value, U>::type>
+    template <typename U, class = typename std::enable_if<!std::is_same<typename std::decay<U>::type, Any>::value, void>::type>
     Any(U &&value) : m_ptr(new Derived<typename std::decay<U>::type>(forward<U>(value))),
-                     m_tpIndex(type_index(typeid(typename std::decay<U>::type))) {}
+                     ty(typeid(typename std::decay<U>::type)) {}
 
-    bool IsNull() const { return !bool(m_ptr); }
+    bool IsNull() const { return m_ptr == nullptr; }
 
     template <class U>
     bool Is() const
     {
-        return m_tpIndex == type_index(typeid(U));
+        return ty == type_index(typeid(U));
     }
 
     template <class U>
@@ -704,7 +700,7 @@ struct Any
             return *this;
 
         m_ptr = a.Clone();
-        m_tpIndex = a.m_tpIndex;
+        ty = a.ty;
         return *this;
     }
 
@@ -738,5 +734,5 @@ private:
     }
 
     std::unique_ptr<Base> m_ptr;
-    std::type_index m_tpIndex;
+    std::type_index ty;
 };
