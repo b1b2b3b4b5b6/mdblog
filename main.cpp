@@ -528,6 +528,12 @@ private:
     connect_to_database();       // 假设这个函数已实现
     void disconnect(void *conn); // 假设这个函数已实现
 
+    /*
+        FILE* 是C风格资源，必须用 fclose() 释放，而不是 delete
+        unique_ptr 默认使用 delete，所以需要自定义
+        decltype(&fclose) 获取函数指针类型，作为删除器类型
+        构造时 {nullptr, &fclose} 提供删除器实例
+    */
     unique_ptr<FILE, decltype(&fclose)> file_{nullptr, &fclose};
     unique_ptr<char[]> buffer_;
     unique_ptr<void, decltype(&disconnect)> connection_{nullptr, &disconnect};
@@ -735,4 +741,126 @@ private:
 
     std::unique_ptr<Base> m_ptr;
     std::type_index ty;
+};
+
+/* 线程池 - 支持任意返回类型  */
+class ThreadPool
+{
+public:
+    explicit ThreadPool(size_t num_threads)
+    {
+        is_running.store(true, std::memory_order_release);
+
+        for (size_t i = 0; i < num_threads; ++i)
+        {
+            workers.emplace_back([this]()
+                                 {
+                while (true)
+                {
+                    std::function<void()> task;
+                    {
+                        std::unique_lock<std::mutex> lock(queue_mutex);
+                        
+                        // 等待任务或停止信号
+                        cv.wait(lock, [this]() {
+                            return !is_running.load(std::memory_order_acquire) || !tasks.empty();
+                        });
+                        
+                        // 退出条件：停止且队列为空
+                        if (!is_running.load(std::memory_order_acquire) && tasks.empty())
+                            return;
+                        
+                        if (!tasks.empty())
+                        {
+                            task = std::move(tasks.front());
+                            tasks.pop();
+                        }
+                    }
+                    
+                    // 执行任务（锁外执行）
+                    if (task)
+                    {
+                        try
+                        {
+                            task();
+                        }
+                        catch (const std::exception &e)
+                        {
+                            std::cerr << "Task exception: " << e.what() << std::endl;
+                        }
+                        catch (...)
+                        {
+                            std::cerr << "Unknown task exception" << std::endl;
+                        }
+                    }
+                } });
+        }
+    }
+
+    ~ThreadPool()
+    {
+        // 通知所有线程停止
+        is_running.store(false, std::memory_order_release);
+        cv.notify_all();
+
+        // 等待所有线程完成
+        for (auto &worker : workers)
+        {
+            if (worker.joinable())
+                worker.join();
+        }
+    }
+
+    // 禁止拷贝和移动
+    ThreadPool(const ThreadPool &) = delete;
+    ThreadPool(ThreadPool &&) = delete;
+    ThreadPool &operator=(const ThreadPool &) = delete;
+    ThreadPool &operator=(ThreadPool &&) = delete;
+
+    // 提交任意可调用对象，返回 future
+    template <typename F, typename... Args>
+    auto submit(F &&f, Args &&...args)
+        -> std::future<typename std::result_of<F(Args...)>::type>
+    {
+        using return_type = typename std::result_of<F(Args...)>::type;
+
+        // 创建 packaged_task
+        auto task = std::make_shared<std::packaged_task<return_type()>>(
+            [f = std::forward<F>(f), ... args = std::forward<Args>(args)]() mutable -> return_type
+            {
+                return f(std::move(args)...);
+            });
+
+        std::future<return_type> result = task->get_future();
+
+        {
+            std::unique_lock<std::mutex> lock(queue_mutex);
+
+            // 不允许在停止后提交任务
+            if (!is_running.load(std::memory_order_acquire))
+                throw std::runtime_error("Cannot submit task to stopped ThreadPool");
+
+            // 将任务包装成 void() 函数
+            tasks.emplace([task]()
+                          { (*task)(); });
+        }
+
+        cv.notify_one();
+        return result;
+    }
+
+    // 获取待处理任务数量
+    size_t pending_tasks() const
+    {
+        std::unique_lock<std::mutex> lock(queue_mutex);
+        return tasks.size();
+    }
+
+private:
+    std::vector<std::thread> workers;
+    std::queue<std::function<void()>> tasks;
+
+    mutable std::mutex queue_mutex;
+    std::condition_variable cv;
+    std::atomic<bool> is_running;
 };
