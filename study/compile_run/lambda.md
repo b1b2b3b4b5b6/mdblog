@@ -65,7 +65,7 @@ void LambdaDemo()
 
 - **捕获列表**，对应  **private 成员**
 - **形参列表**，对应 成员函数 **operator() 的形参列表**
-- **mutable**，对应 成员函数 **operator() 的常属性 const**，即是否是 **常成员函数**
+- **mutable**，对应 成员函数 **operator() 的常属性 const**有无，默认带const，加了mutable则去掉const
 - **返回类型**，对应 成员函数 **operator() 的返回类型**
 - **函数体**，对应 成员函数 **operator() 的函数体**
 
